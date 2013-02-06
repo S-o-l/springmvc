@@ -1,0 +1,878 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/bootstrap-responsive.css" rel="stylesheet">
+        <script src="js/jquery.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script>
+            function ajaxMapByPath() {
+                $("#tryModalMapByPathAnswer").html("");
+                $.ajax({
+                   url : "mvc/requestmap/mapbypath",
+                   success : function (data) {
+                       $("#tryModalMapByPathAnswer").html(data);
+                   },
+                   error : function (data) {
+                       $("#tryModalMapByPathAnswer").html("Failed. It shouldnt happen!");
+                   }
+                });
+            }
+            function ajaxMapByMeth(data) {
+                $.ajax({
+                   url : "mvc/requestmap/mapbymeth",
+                   type : data,
+                   success : function (data) {
+                       $("#tryModalMapByMethAnswer").html(data);
+                   },
+                   error : function (data) {
+                       $("#tryModalMapByMethAnswer").html("Failed. It shouldnt happen!");
+                   }
+                });
+            }
+            function ajaxMapByPresParam(param) {
+                var passing = {}
+                passing[param]= "passed";
+                $.ajax({
+                   url : "mvc/requestmap/mapbypresparam",
+                   data : passing,
+                   success : function (data) {
+                       $("#tryModalMapByPresParamAnswer").html(data);
+                   },
+                   error : function () {
+                       $("#tryModalMapByPresParamAnswer").html("Sorry! No goodparam in request!");
+                   }
+                });
+            }
+            function ajaxMapByAbsParam(param) {
+                var passing = {}
+                passing[param]= "passed";
+                $.ajax({
+                   url : "mvc/requestmap/mapbyabsparam",
+                   data : passing,
+                   success : function (data) {
+                       $("#tryModalMapByAbsParamAnswer").html(data);
+                   },
+                   error : function () {
+                       $("#tryModalMapByAbsParamAnswer").html("Sorry! There is a parameter in your request!");
+                   }
+                });
+            }
+            function ajaxMapByPresHead(header) {
+                var passing = {}
+                passing[header]= "passed";
+                $.ajax({
+                   url : "mvc/requestmap/mapbypreshead",
+                   headers : passing,
+                   success : function (data) {
+                       $("#tryModalMapByPresHeadAnswer").html(data);
+                   },
+                   error : function () {
+                       $("#tryModalMapByPresHeadAnswer").html("Sorry! There is no Goodheader!");
+                   }
+                });
+            }
+            function ajaxMapByAbsHead(header) {
+                var passing = {}
+                passing[header]= "passed";
+                $.ajax({
+                   url : "mvc/requestmap/mapbyabshead",
+                   headers : passing,
+                   success : function (data) {
+                       $("#tryModalMapByAbsHeadAnswer").html(data);
+                   },
+                   error : function () {
+                       $("#tryModalMapByAbsHeadAnswer").html("Sorry! There is a Badheader in your request!");
+                   }
+                });
+            }
+            function ajaxMapByRegexp() {
+                var urlpath = "mvc/requestmap/mapbyregexp/" + $("#tryModalMapByRegexpInput").val();
+                $.ajax({
+                   url : urlpath,
+                   success : function (data) {
+                       $("#tryModalMapByRegexpAnswer").html(data);
+                   },
+                   error : function () {
+                       $("#tryModalMapByRegexpAnswer").html("Failed. It shouldnt happen!");
+                   }
+                });
+            }
+
+            function ajaxReqParam() {
+                $.ajax({
+                   url : "mvc/requestdata/reqparam/",
+                   data: { "parameter" : $("#tryModalReqParamInput").val()},
+                   success : function (data) {
+                       $("#tryModalReqParamAnswer").html(data);
+                   },
+                   error : function () {
+                       $("#tryModalReqParamAnswer").html("Failed. It shouldnt happen!");
+                   }
+                });
+            }
+            function ajaxGroupParam() {
+                $.ajax({
+                   url : "mvc/requestdata/groupparam/",
+                   data: {
+                       "param1" : $("#tryModalGroupParamInput1").val(),
+                       "param2" : $("#tryModalGroupParamInput2").val(),
+                       "param3" : $("#tryModalGroupParamInput3").val()
+                   },
+                   success : function (data) {
+                       $("#tryModalGroupParamAnswer").html(data);
+                   },
+                   error : function () {
+                       $("#tryModalGroupParamAnswer").html("Failed. It shouldnt happen!");
+                   }
+                });
+            }
+            function ajaxPathVar() {
+                $.ajax({
+                   url : "mvc/requestdata/pathvar/" + $("#tryModalPathVarInput").val(),
+                   success : function (data) {
+                       $("#tryModalPathVarAnswer").html(data);
+                   },
+                   error : function () {
+                       $("#tryModalPathVarAnswer").html("Failed. It shouldnt happen!");
+                   }
+                });
+            }
+            function ajaxHead() {
+                $.ajax({
+                   url : "mvc/requestdata/head/",
+                   success : function (data) {
+                       $("#tryModalHeadAnswer").html(data);
+                   },
+                   error : function () {
+                       $("#tryModalHeadAnswer").html("Failed. It shouldnt happen!");
+                   }
+                });
+            }
+            function ajaxEntity() {
+                $.ajax({
+                   url: "mvc/requestdata/entity/",
+                   success : function (data) {
+                       $("#tryModalEntityAnswer").html(data);
+                   },
+                   error : function () {
+                       $("#tryModalEntityAnswer").html("Failed. It shouldnt happen!");
+                   }
+                });
+            }
+            function ajaxReqArgum() {
+                $.ajax({
+                   url: "mvc/requeststandard/reqargum/",
+                   success : function (data) {
+                       $("#tryModalReqArgumAnswer").html(data);
+                   },
+                   error : function () {
+                       $("#tryModalReqArgumAnswer").html("Failed. It shouldnt happen!");
+                   }
+                });
+            }
+        </script>
+    </head>
+    <body>
+    <div class="navbar" id="TopHeader">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="index.html">Spring MVC demo</a>
+          <div class="navbar-content">
+            <ul class="nav nav-pills">
+              <li id="homemenu">
+                <a href="index.html">Home</a> 
+              </li>
+              <li id="aboutmenu">
+                <a href="about.html">About</a> 
+              </li>
+              <li id="contactsmenu">
+                <a href="contacts.html">Contacts</a> 
+              </li>              
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>       
+<div class="container-fluid">
+<div class="row-fluid">
+    <div id="leftColumn" class="span1"></div>
+    <div id="leftColumn" class="span10">
+        <div class="row-fluid">
+        <div class="alert alert-info">
+            <h4 style="margin-bottom:1em">Request mapping in Spring 3 MVC
+            <button type="button" class="btn btn-mini btn-primary" data-toggle="collapse" data-target="#reqMapping">Show</button>
+            </h4>
+            <div id="reqMapping" class="collapse">
+                
+            <!-- mapping by path -->    
+            <div class="row-fluid">
+                <div class="span2" style="margin-bottom:1em">Mapping by <b>path</b>:</div>
+                <div class="span8" style="margin-bottom:1em">Spring MVC dispatcher request mapping by path with @RequestMapping("path") annotation</div>
+                <div class="span2" style="margin-bottom:1em">
+                   <ul class="inline pull-right">
+                        <li><button type="button" class="btn btn-mini btn-primary" data-toggle="modal" data-target="#tryModalMapByPath">Try</button></li>
+                        <li><button type="button" class="btn btn-mini btn-primary" data-toggle="modal" data-target="#codeModalMapByPath">View code</button></li>
+                    </ul>
+                </div>
+            </div>
+
+                <!-- Try modal mapping by path -->
+            <div id="tryModalMapByPath" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="tryModalMapByPathLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="tryModalMapByPathLabel">Mapping by path</h3>
+                </div>
+                <div class="modal-body">
+                    <p>This is example of mapping by path in Spring 3 MVC</p><br>
+                    <label class="btn" onclick="ajaxMapByPath()">Make request to "mvc/requestmap/mapbypath": </label>
+                    <label class="label" id="tryModalMapByPathAnswer"></label>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            </div>
+
+                <!-- Code modal mapping by path -->
+            <div id="codeModalMapByPath" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="codeModalMapByPathLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="codeModalMapByPathLabel">Code of mapping by path</h3>
+                </div>
+                <div class="modal-body">
+                    <p>This is code of mapping by path usage in Spring 3 MVC</p>
+                    <code>@RequestMapping("mapbypath")</code><br>
+                    <code>public @ResponseBody String getByPath() {</code><br>
+                    <code>return "Hello, this is request to /mvc/requestmap/bypath path";</code><br>
+                    <code>}</code>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            </div>
+
+            <!-- mapping by method -->    
+            <div class="row-fluid">
+                <div class="span2" style="margin-bottom:1em">Mapping by <b>method</b>:</div>
+                <div class="span8" style="margin-bottom:1em">Spring MVC dispatcher request mapping by method (usually GET/POST) with @RequestMapping(method=value) annotation</div>
+                <div class="span2" style="margin-bottom:1em">
+                   <ul class="inline pull-right">
+                        <li><button type="button" class="btn btn-mini btn-primary" data-toggle="modal" data-target="#tryModalMapByMeth">Try</button></li>
+                        <li><button type="button" class="btn btn-mini btn-primary" data-toggle="modal" data-target="#codeModalMapByMeth">View code</button></li>
+                    </ul>
+                </div>
+            </div>
+
+                <!-- Try modal mapping by method -->
+            <div id="tryModalMapByMeth" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="tryModalMapByMethLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="tryModalMapByMethLabel">Mapping by method</h3>
+                </div>
+                <div class="modal-body">
+                    <p>This is example of mapping by method in Spring 3 MVC</p><br>
+                    Make a request with a method to "mvc/requestmap/bymeth":<br>
+                    <label class="btn" onclick="ajaxMapByMeth('GET')">GET request</label>
+                    <label class="btn" onclick="ajaxMapByMeth('POST')">POST request</label><br>
+                    <label class="label" id="tryModalMapByMethAnswer"></label>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            </div>
+
+                <!-- Code modal mapping by method -->
+            <div id="codeModalMapByMeth" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="codeModalMapByMethLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="codeModalMapByMethLabel">Code of mapping by method</h3>
+                </div>
+                <div class="modal-body">
+                    <p>This is code of mapping by method usage in Spring 3 MVC</p>
+                    <code>@RequestMapping(value="mapbymeth", method=RequestMethod.GET)</code><br>
+                    <code>public @ResponseBody String getByMethGet() {</code><br>
+                    <code>  return "Hello, this is GET request to /mvc/requestmap/mapbymeth path";</code><br>
+                    <code>}</code>
+                    <br><br>
+                    <code>@RequestMapping(value="mapbymeth", method=RequestMethod.POST)</code><br>
+                    <code>public @ResponseBody String getByMethPost() {</code><br>
+                    <code>  return "Hello, this is POST request to /mvc/requestmap/mapbymeth path";</code><br>
+                    <code>}</code>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            </div>
+            
+            <!-- mapping by parameter presence -->    
+            <div class="row-fluid">
+                <div class="span2" style="margin-bottom:1em">Mapping by <b>presence of parameter</b>:</div>
+                <div class="span8" style="margin-bottom:1em">Spring MVC dispatcher request mapping by value with @RequestMapping(params="value") annotation</div>
+                <div class="span2" style="margin-bottom:1em">
+                   <ul class="inline pull-right">
+                        <li><button type="button" class="btn btn-mini btn-primary" data-toggle="modal" data-target="#tryModalMapByPresParam">Try</button></li>
+                        <li><button type="button" class="btn btn-mini btn-primary" data-toggle="modal" data-target="#codeModalMapByPresParam">View code</button></li>
+                    </ul>
+                </div>
+            </div>
+
+                <!-- Try modal mapping by presence of parameter -->
+            <div id="tryModalMapByPresParam" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="tryModalMapByPresParamLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="tryModalMapByPresParamLabel">Mapping by presence of parameter</h3>
+                </div>
+                <div class="modal-body">
+                    <p>This is example of mapping by presence of parameter in Spring 3 MVC</p><br>
+                    Make a request with a 'goodparam' or 'badparam' to check method to "mvc/requestmap/mapbypresparam":<br>
+                    <label class="btn" onclick="ajaxMapByPresParam('goodparam')">Send goodparam</label>
+                    <label class="btn" onclick="ajaxMapByPresParam('badparam')">Send badparam</label><br>
+                    <label class="label" id="tryModalMapByPresParamAnswer"></label>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            </div>            
+            
+                <!-- Code modal mapping by presence of parameter -->
+            <div id="codeModalMapByPresParam" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="codeModalMapByPresParamLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="codeModalMapByPresParamLabel">Code of mapping by presence of parameter</h3>
+                </div>
+                <div class="modal-body">
+                    <p>This is code of mapping by presence of parameter usage in Spring 3 MVC</p>
+                    <code>@RequestMapping(value="mapbypresparam", params="goodparam")</code><br>
+                    <code>public @ResponseBody String getByPresParam() {</code><br>
+                    <code>return "Hello, this is request with presence of 'goodparam' parameter";</code><br>
+                    <code>}</code>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            </div>
+                
+            <!-- mapping by parameter absence -->    
+            <div class="row-fluid">
+                <div class="span2" style="margin-bottom:1em">Mapping by <b>absence of parameter</b>:</div>
+                <div class="span8" style="margin-bottom:1em">Spring MVC dispatcher request mapping by absence of value with @RequestMapping(params="!value") annotation</div>
+                <div class="span2" style="margin-bottom:1em">
+                   <ul class="inline pull-right">
+                        <li><button type="button" class="btn btn-mini btn-primary" data-toggle="modal" data-target="#tryModalMapByAbsParam">Try</button></li>
+                        <li><button type="button" class="btn btn-mini btn-primary" data-toggle="modal" data-target="#codeModalMapByAbsParam">View code</button></li>
+                    </ul>
+                </div>
+            </div>
+                
+                <!-- Try modal mapping by absence of parameter -->
+            <div id="tryModalMapByAbsParam" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="tryModalMapByAbsParamLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="tryModalMapByAbsParamLabel">Mapping by absence of parameter</h3>
+                </div>
+                <div class="modal-body">
+                    <p>This is example of mapping by absence of parameter in Spring 3 MVC</p><br>
+                    Make a request without a parameter 'foo' or with parameter to check method to "mvc/requestmap/mapbyabsparam":<br>
+                    <label class="btn" onclick="ajaxMapByAbsParam('nofoo')">Send without</label>
+                    <label class="btn" onclick="ajaxMapByAbsParam('foo')">Send with</label><br>
+                    <label class="label" id="tryModalMapByAbsParamAnswer"></label>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            </div>    
+            
+                <!-- Code modal mapping by absence of parameter -->
+            <div id="codeModalMapByAbsParam" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="codeModalMapByAbsParamLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="codeModalMapByAbsParamLabel">Code of mapping by absence of parameter</h3>
+                </div>
+                <div class="modal-body">
+                    <p>This is code of mapping by absence of parameter usage in Spring 3 MVC</p>
+                    <code>@RequestMapping(value="mapbyabsparam", params="!foo")</code><br>
+                    <code>public @ResponseBody String getByAbsParam() {</code><br>
+                    <code>return "Hello, this is request with absence of 'foo' parameter";</code><br>
+                    <code>}</code>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            </div>
+                
+            <!-- mapping by header -->    
+            <div class="row-fluid">
+                <div class="span2" style="margin-bottom:1em">Mapping by <b>presence of header</b>:</div>
+                <div class="span8" style="margin-bottom:1em">Spring MVC dispatcher request mapping by presence of header with @RequestMapping(headers="value") annotation</div>
+                <div class="span2" style="margin-bottom:1em">
+                   <ul class="inline pull-right">
+                        <li><button type="button" class="btn btn-mini btn-primary" data-toggle="modal" data-target="#tryModalMapByPresHead">Try</button></li>
+                        <li><button type="button" class="btn btn-mini btn-primary" data-toggle="modal" data-target="#codeModalMapByPresHead">View code</button></li>
+                    </ul>
+                </div>
+            </div>
+                
+                <!-- Try modal mapping by presence of header -->
+            <div id="tryModalMapByPresHead" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="tryModalMapByPresHeadLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="tryModalMapByPresHeadLabel">Mapping by presence of header</h3>
+                </div>
+                <div class="modal-body">
+                    <p>This is example of mapping by presence of header in Spring 3 MVC</p><br>
+                    Make a request with a header "Goodheader" to "mvc/requestmap/mapbypreshead":<br>
+                    <label class="btn" onclick="ajaxMapByPresHead('Goodheader')">Send with</label>
+                    <label class="btn" onclick="ajaxMapByPresHead('NotGoodheader')">Send without</label><br>
+                    <label class="label" id="tryModalMapByPresHeadAnswer"></label>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            </div>    
+            
+                <!-- Code modal mapping by absence of parameter -->
+            <div id="codeModalMapByPresHead" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="codeModalMapByPresHeadLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="codeModalMapByPresHeadLabel">Code of mapping by presence of header</h3>
+                </div>
+                <div class="modal-body">
+                    <p>This is code of mapping by presence of header usage in Spring 3 MVC</p>
+                    <code>@RequestMapping(value="mapbypreshead", headers="Goodheader")</code><br>
+                    <code>public @ResponseBody String getByPresHead() {</code><br>
+                    <code>return "Hello, this is request with presence of Goodheader!";</code><br>
+                    <code>}</code>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            </div>
+                
+            <!-- mapping by absence of header -->    
+            <div class="row-fluid">
+                <div class="span2" style="margin-bottom:1em">Mapping by <b>absence of header</b>:</div>
+                <div class="span8" style="margin-bottom:1em">Spring MVC dispatcher request mapping by absence of header with @RequestMapping(headers="!value") annotation</div>
+                <div class="span2" style="margin-bottom:1em">
+                   <ul class="inline pull-right">
+                        <li><button type="button" class="btn btn-mini btn-primary" data-toggle="modal" data-target="#tryModalMapByAbsHead">Try</button></li>
+                        <li><button type="button" class="btn btn-mini btn-primary" data-toggle="modal" data-target="#codeModalMapByAbsHead">View code</button></li>
+                    </ul>
+                </div>
+            </div>
+                
+                <!-- Try modal mapping by absence of header -->
+            <div id="tryModalMapByAbsHead" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="tryModalMapByAbsHeadLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="tryModalMapByAbsHeadLabel">Mapping by absence of header</h3>
+                </div>
+                <div class="modal-body">
+                    <p>This is example of mapping by absence of header in Spring 3 MVC</p><br>
+                    Make a request without a header "Badheader" or with header to check method to "mvc/requestmap/mapbyabshead":<br>
+                    <label class="btn" onclick="ajaxMapByAbsHead('NotBadheader')">Send without</label>
+                    <label class="btn" onclick="ajaxMapByAbsHead('Badheader')">Send with</label><br>
+                    <label class="label" id="tryModalMapByAbsHeadAnswer"></label>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            </div>    
+            
+                <!-- Code modal mapping by absence of parameter -->
+            <div id="codeModalMapByAbsHead" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="codeModalMapByAbsHeadLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="codeModalMapByAbsHeadLabel">Code of mapping by absence of header</h3>
+                </div>
+                <div class="modal-body">
+                    <p>This is code of mapping by presence of header usage in Spring 3 MVC</p>
+                    <code>@RequestMapping(value="mapbyabshead", headers="!Badheader")</code><br>
+                    <code>public @ResponseBody String getByAbsHead() {</code><br>
+                    <code>return "Hello, this is request without presence of Badheader!";</code><br>
+                    <code>}</code>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            </div>
+            
+            <!-- mapping by regexp -->    
+            <div class="row-fluid">
+                <div class="span2" style="margin-bottom:1em">Mapping by <b>regexp</b>:</div>
+                <div class="span8" style="margin-bottom:1em">Spring MVC dispatcher request mapping by regexp with @RequestMapping("regexp") annotation</div>
+                <div class="span2" style="margin-bottom:1em">
+                   <ul class="inline pull-right">
+                        <li><button type="button" class="btn btn-mini btn-primary" data-toggle="modal" data-target="#tryModalMapByRegexp">Try</button></li>
+                        <li><button type="button" class="btn btn-mini btn-primary" data-toggle="modal" data-target="#codeModalMapByRegexp">View code</button></li>
+                    </ul>
+                </div>
+            </div>
+                
+                <!-- Try modal mapping by regexp -->
+            <div id="tryModalMapByRegexp" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="tryModalMapByRegexpLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="tryModalMapByRegexpLabel">Mapping by regexp</h3>
+                </div>
+                <div class="modal-body">
+                    <p>This is example of mapping by regexp in Spring 3 MVC</p><br>
+                    Make a request with any path to reach regexp request at "mvc/requestmap/mapbyregexp/*":<br>
+                    <input id="tryModalMapByRegexpInput" class="search-query" placeholder="type any path">
+                    <label class="btn" onclick="ajaxMapByRegexp()">Send</label>
+                    <label class="label" id="tryModalMapByRegexpAnswer"></label>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            </div>    
+            
+                <!-- Code modal mapping by regexp -->
+            <div id="codeModalMapByRegexp" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="codeModalMapByRegexpLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="codeModalMapByRegexpLabel">Code of mapping by regexp</h3>
+                </div>
+                <div class="modal-body">
+                    <p>This is code of mapping by regexp usage in Spring 3 MVC</p>
+                    <code>@RequestMapping(value="mapbyregexp/**")</code><br>
+                    <code>public @ResponseBody String getByRegexp() {</code><br>
+                    <code>return "Hello, this is request to mapbyregexp/*!";</code><br>
+                    <code>}</code>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            </div>                
+                
+                
+                
+            </div>
+        </div>
+        </div>
+        <p></p>
+        <div class="row-fluid">
+        <div class="alert alert-info">
+            <h4 style="margin-bottom:1em">Obtaining request data in Spring 3 MVC
+            <button type="button" class="btn btn-mini btn-primary" data-toggle="collapse" data-target="#reqData">Show</button>
+            </h4>
+            <div id="reqData" class="collapse">
+
+            <!-- obtaining request parameter -->    
+            <div class="row-fluid">
+                <div class="span2" style="margin-bottom:1em">Request <b>parameter</b>:</div>
+                <div class="span8" style="margin-bottom:1em">Obtaining request parameter in Spring MVC with @RequestParam annotation</div>
+                <div class="span2" style="margin-bottom:1em">
+                   <ul class="inline pull-right">
+                        <li><button type="button" class="btn btn-mini btn-primary" data-toggle="modal" data-target="#tryModalReqParam">Try</button></li>
+                        <li><button type="button" class="btn btn-mini btn-primary" data-toggle="modal" data-target="#codeModalReqParam">View code</button></li>
+                    </ul>
+                </div>
+            </div>
+
+                <!-- Try modal request parameter -->
+            <div id="tryModalReqParam" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="tryModalReqParamLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="tryModalReqParamLabel">Obtaining request parameter</h3>
+                </div>
+                <div class="modal-body">
+                    <p>This is example of obtaining of request parameter in Spring 3 MVC</p><br>
+                    <input id="tryModalReqParamInput" type="text" placeholder="input param here"><br>
+                    <label class="btn" onclick="ajaxReqParam()">Send</label>
+                    <label class="label" id="tryModalReqParamAnswer"></label>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            </div>
+
+                <!-- Code modal request parameter -->
+            <div id="codeModalReqParam" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="codeModalReqParamLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="codeModalReqParamLabel">Code of obtaining  of request parameter</h3>
+                </div>
+                <div class="modal-body">
+                    <p>This is code of request parameter in Spring 3 MVC</p>
+                    <code>@RequestMapping("reqparam")</code><br>
+                    <code>public @ResponseBody String reqParam(@RequestParam String parameter) {</code><br>
+                    <code>return "Hello, this is a request with a parameter and its value is " + parameter;</code><br>
+                    <code>}</code>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            </div>
+
+            <!-- obtaining group of parameters at request-->    
+            <div class="row-fluid">
+                <div class="span2" style="margin-bottom:1em"><b>Group of parameters</b>:</div>
+                <div class="span8" style="margin-bottom:1em">Obtaining group of parameters from request in Spring MVC with '(Object object)' method parameters</div>
+                <div class="span2" style="margin-bottom:1em">
+                   <ul class="inline pull-right">
+                        <li><button type="button" class="btn btn-mini btn-primary" data-toggle="modal" data-target="#tryModalGroupParam">Try</button></li>
+                        <li><button type="button" class="btn btn-mini btn-primary" data-toggle="modal" data-target="#codeModalGroupParam">View code</button></li>
+                    </ul>
+                </div>
+            </div>
+
+                <!-- Try modal group of parameters request -->
+            <div id="tryModalGroupParam" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="tryModalGroupParamLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="tryModalGroupParamLabel">Obtaining group of parameters</h3>
+                </div>
+                <div class="modal-body">
+                    <p>This is example of obtaining of group of parameters in Spring 3 MVC</p><br>
+                    <input id="tryModalGroupParamInput1" type="text" placeholder="input param1"><br>
+                    <input id="tryModalGroupParamInput2" type="text" placeholder="input param2"><br>
+                    <input id="tryModalGroupParamInput3" type="text" placeholder="input param3"><br>
+                    <label class="btn" onclick="ajaxGroupParam()">Send</label>
+                    <label class="label" id="tryModalGroupParamAnswer"></label>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            </div>
+
+                <!-- Code modal group of parameters request -->
+            <div id="codeModalGroupParam" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="codeModalGroupParamLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="codeModalGroupParamLabel">Code of obtaining group of parameters</h3>
+                </div>
+                <div class="modal-body">
+                    <p>This is code of obtaining group of parameters in Spring 3 MVC</p>
+                    <code>@RequestMapping("groupparam")</code><br>
+                    <code>public @ResponseBody String reqParam(GroupParam groupparam) {</code><br>
+                    <code>return "Hello, this is a request with a group of parameters</code><br>
+                    <code>and they are: " + groupparam.getParam1() + </code><br>
+                    <code>" and " + groupparam.getParam2() + </code><br>
+                    <code>" and " + groupparam.getParam3();</code><br>
+                    <code>}</code>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            </div>
+                
+                
+            <!-- obtaining path variable from request-->    
+            <div class="row-fluid">
+                <div class="span2" style="margin-bottom:1em"><b>Path variable</b>:</div>
+                <div class="span8" style="margin-bottom:1em">Obtaining part of request path as variable in Spring MVC with @RequestMapping(value='/foo/{variable}') annotation</div>
+                <div class="span2" style="margin-bottom:1em">
+                   <ul class="inline pull-right">
+                        <li><button type="button" class="btn btn-mini btn-primary" data-toggle="modal" data-target="#tryModalPathVar">Try</button></li>
+                        <li><button type="button" class="btn btn-mini btn-primary" data-toggle="modal" data-target="#codeModalPathVar">View code</button></li>
+                    </ul>
+                </div>
+            </div>
+
+                <!-- Try modal path variable from request -->
+            <div id="tryModalPathVar" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="tryModalPathVarLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="tryModalPathVarLabel">Obtaining part of path as variable</h3>
+                </div>
+                <div class="modal-body">
+                    <p>This is example of obtaining part of request path as variable in Spring 3 MVC</p><br>
+                    <input id="tryModalPathVarInput" type="text" placeholder="input path"><br>
+                    <label class="btn" onclick="ajaxPathVar()">Send</label>
+                    <label class="label" id="tryModalPathVarAnswer"></label>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            </div>
+
+                <!-- Code modal path variable from request -->
+            <div id="codeModalPathVar" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="codeModalPathVarLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="codeModalPathVarLabel">Code of obtaining part of path as variable</h3>
+                </div>
+                <div class="modal-body">
+                    <p>This is code of obtaining part of path as variable in Spring 3 MVC</p>
+                    <code>@RequestMapping(value="pathvar/{var}")</code><br>
+                    <code>public @ResponseBody String pathVar(@PathVariable String var) {</code><br>
+                    <code>    return "Hello, this is a request to a path: " + var;</code><br>
+                    <code>}</code>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            </div>
+                
+            <!-- obtaining header from request-->    
+            <div class="row-fluid">
+                <div class="span2" style="margin-bottom:1em"><b>Request header</b>:</div>
+                <div class="span8" style="margin-bottom:1em">Obtaining request header in Spring MVC with @RequestHeader annotation</div>
+                <div class="span2" style="margin-bottom:1em">
+                   <ul class="inline pull-right">
+                        <li><button type="button" class="btn btn-mini btn-primary" data-toggle="modal" data-target="#tryModalHead">Try</button></li>
+                        <li><button type="button" class="btn btn-mini btn-primary" data-toggle="modal" data-target="#codeModalHead">View code</button></li>
+                    </ul>
+                </div>
+            </div>
+
+                <!-- Try modal header from request -->
+            <div id="tryModalHead" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="tryModalHeadLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="tryModalHeadLabel">Obtaining header of request</h3>
+                </div>
+                <div class="modal-body">
+                    <p>This is example of obtaining header of request Spring 3 MVC</p><br>
+                    <label class="btn" onclick="ajaxHead()">Send</label>
+                    <label class="label" id="tryModalHeadAnswer"></label>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            </div>
+
+                <!-- Code modal header  from request -->
+            <div id="codeModalHead" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="codeModalHeadLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="codeModalHeadLabel">Code of obtaining header of request</h3>
+                </div>
+                <div class="modal-body">
+                    <p>This is code of obtaining header of request in Spring 3 MVC</p>
+                    <code>@RequestMapping(value="head")</code><br>
+                    <code>public @ResponseBody String head(@RequestHeader("User-Agent") String userAgent) {</code><br>
+                    <code>return "Hello, this is a request with a header: " + userAgent;</code><br>
+                    <code>}</code>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            </div>
+
+            <!-- obtaining entity of request-->    
+            <div class="row-fluid">
+                <div class="span2" style="margin-bottom:1em"><b>Request entity</b>:</div>
+                <div class="span8" style="margin-bottom:1em">Obtaining request entity in Spring MVC with HttpEntity class</div>
+                <div class="span2" style="margin-bottom:1em">
+                   <ul class="inline pull-right">
+                        <li><button type="button" class="btn btn-mini btn-primary" data-toggle="modal" data-target="#tryModalEntity">Try</button></li>
+                        <li><button type="button" class="btn btn-mini btn-primary" data-toggle="modal" data-target="#codeModalEntity">View code</button></li>
+                    </ul>
+                </div>
+            </div>
+
+                <!-- Try modal body of request -->
+            <div id="tryModalEntity" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="tryModalEntityLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="tryModalEntityLabel">Obtaining request entity</h3>
+                </div>
+                <div class="modal-body">
+                    <p>This is example of obtaining request entity in Spring 3 MVC</p><br>
+                    <label class="btn" onclick="ajaxEntity()">Send</label>
+                    <label class="label" id="tryModalEntityAnswer"></label>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            </div>
+
+                <!-- Code modal body of request -->
+            <div id="codeModalEntity" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="codeModalEntityLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="codeModalEntityLabel">Code of obtaining request entity</h3>
+                </div>
+                <div class="modal-body">
+                    <p>This is code of obtaining request entity in Spring 3 MVC</p>
+                    <code>@RequestMapping(value="entity")</code><br>
+                    <code>public @ResponseBody String body(HttpEntity<String> entity) {</code><br>
+                    <code>return "Hello, this is a request entity: " + entity.getBody() + entity.getHeaders();</code><br>
+                    <code>}</code>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            </div>
+                
+                
+            </div>
+        </div>
+        </div>
+
+        <div class="row-fluid">
+        <div class="alert alert-info">
+            <h4 style="margin-bottom:1em">Obtaining standard arguments in Spring 3 MVC
+            <button type="button" class="btn btn-mini btn-primary" data-toggle="collapse" data-target="#reqStand">Show</button>
+            </h4>
+            <div id="reqStand" class="collapse">
+
+            <!-- obtaining entity of request-->    
+            <div class="row-fluid">
+                <div class="span2" style="margin-bottom:1em"><b>Request arguments</b>:</div>
+                <div class="span8" style="margin-bottom:1em">Obtaining request arguments in Spring MVC with (in exmpl) HttpServletRequest, Principal, Local classes</div>
+                <div class="span2" style="margin-bottom:1em">
+                   <ul class="inline pull-right">
+                        <li><button type="button" class="btn btn-mini btn-primary" data-toggle="modal" data-target="#tryModalReqArgum">Try</button></li>
+                        <li><button type="button" class="btn btn-mini btn-primary" data-toggle="modal" data-target="#codeModalReqArgum">View code</button></li>
+                    </ul>
+                </div>
+            </div>
+
+                <!-- Try modal body of request -->
+            <div id="tryModalReqArgum" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="tryModalReqArgumLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="tryModalReqArgumLabel">Obtaining request arguments</h3>
+                </div>
+                <div class="modal-body">
+                    <p>This is example of obtaining request arguments in Spring 3 MVC</p><br>
+                    <label class="btn" onclick="ajaxReqArgum()">Send</label>
+                    <label class="label" id="tryModalReqArgumAnswer"></label>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            </div>
+
+                <!-- Code modal body of request -->
+            <div id="codeModalReqArgum" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="codeModalReqArgumLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="codeModalReqArgumLabel">Code of obtaining request arguments</h3>
+                </div>
+                <div class="modal-body">
+                    <p>This is code of obtaining request arguments in Spring 3 MVC</p>
+                    <code>@RequestMapping(value="reqargum"))</code><br>
+                    <code>public @ResponseBody String reqArgum(HttpServletRequest httpServReq, Principal principal, Locale local){</code><br>
+                    <code>return "Hello, this is a request with the following arguments:"</code><br>
+                    <code>+ "HttpServletRequest: "  + httpServReq</code><br>
+                    <code>+ "Principal: " + principal</code><br>
+                    <code>+ "Locale: " + local;</code><br>
+                    <code>}</code>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            </div>
+                
+            </div>
+        </div>
+        </div>
+    </div>
+    <div id="leftColumn" class="span1"></div>    
+</div>
+</div>
+        
+        
+        
+        
+    </body>
+</html>
